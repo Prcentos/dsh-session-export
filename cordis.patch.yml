@@ -1,0 +1,22 @@
+# dsh-session-export bundle patch: mount the session-export plugin.
+#
+# Every key below is a Config field (Schemastery schema); invalid values fail
+# the profile load loudly. See README.md "Configuration" for the full table.
+#
+# The plugin has no hard service dependencies: it registers its tools and its
+# command through `ctx.inject`, so a profile that lacks either surface simply
+# gets no row for it instead of a pending plugin.
+- insert:
+    - id: session-export
+      name: dsh-session-export
+      config:
+        enabled: true
+        # Root of the DSH session store to read ('' = $DSH_HOME/sessions).
+        sessionRoot: ''
+        # Where exported transcripts are written ('' = $DSH_HOME/session-export).
+        outputDir: ''
+        # Default compactness: true drops tool results and truncates tool args.
+        lean: false
+        # Surface switches: register the /export-sessions command and the tools.
+        registerCommand: true
+        registerTools: true

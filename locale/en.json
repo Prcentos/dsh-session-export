@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Session Export",
+    "description": "Export any DSH session as a portable Markdown or JSON transcript — readable by a human, resumable in another agent, or re-importable on another machine."
+  }
+}

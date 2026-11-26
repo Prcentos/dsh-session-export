@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "会话导出",
+    "description": "把任意 DSH 会话导出为可移植的 Markdown / JSON 会话记录——人可直接读，可喂给另一个 agent 继续，也可在另一台机器上重新导入。"
+  }
+}
