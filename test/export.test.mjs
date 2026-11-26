@@ -149,3 +149,24 @@ test('lean mode drops tool results and truncates tool arguments', () => {
   const mdLean = renderMarkdown(session, messages, { lean: true })
   assert.ok(!mdLean.includes('secret'))
 })
+
+test('a tool call recorded on both sides is exported once', () => {
+  const events = [
+    { type: 'session', id: 'session-dup', cwd: 'C:\\work', createdAt: 1795600623511, version: 4 },
+    userEvent('run it'),
+    {
+      type: 'assistant/message',
+      data: { message: { content: [
+        { type: 'tool-call', id: 'c9', name: 'bash', arguments: { cmd: 'ls' } },
+      ] } },
+    },
+    { type: 'tool/call', data: { callId: 'c9', name: 'bash', arguments: '{"cmd":"ls"}' } },
+  ]
+
+  const { messages } = buildTranscript(events)
+
+  assert.equal(messages.length, 1)
+  assert.equal(messages[0].toolCalls.length, 1)
+  assert.equal(messages[0].toolCalls[0].name, 'bash')
+  assert.equal(messages[0].toolCalls[0].arguments.cmd, 'ls')
+})
